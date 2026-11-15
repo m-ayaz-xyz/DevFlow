@@ -1,0 +1,116 @@
+<section class="min-h-screen bg-gray-50 px-5 py-12">
+  <div class="mx-auto max-w-5xl">
+    <!-- Back -->
+    <a routerLink="/jobs" class="text-sm font-semibold text-indigo-600 hover:text-indigo-800">
+      &lt; Back to Jobs
+    </a>
+
+    @if (loading()) {
+      <div class="mt-8 animate-pulse rounded-2xl bg-white p-10">
+        <div class="h-8 w-2/3 rounded bg-gray-200"></div>
+        <div class="mt-5 h-5 w-1/3 rounded bg-gray-100"></div>
+        <div class="mt-10 h-40 rounded bg-gray-100"></div>
+      </div>
+    } @else if (error()) {
+      <div class="mt-8 rounded-2xl border border-gray-200 bg-white p-12 text-center">
+        <h2 class="text-xl font-bold text-gray-900">
+          {{ error() }}
+        </h2>
+
+        <a
+          routerLink="/jobs"
+          class="mt-5 inline-block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-semibold text-white"
+        >
+          Browse Jobs
+        </a>
+      </div>
+    } @else if (job(); as selectedJob) {
+      <!-- Job Header -->
+      <div class="mt-8 rounded-2xl border border-gray-200 p-7 sm:p-10">
+        <div class="flex flex-col gap-6 sm:flex-row sm:items-center">
+          @if (selectedJob.company_logo) {
+            <img
+              [src]="selectedJob.company_logo"
+              [alt]="selectedJob.company_name"
+              class="h-20 w-20 rounded-xl border border-gray-100 object-contain p-2"
+            />
+          } @else {
+            <div
+              class="grid h-20 w-20 place-items-center rounded-xl bg-indigo-100 text-3xl font-bold text-indigo-700"
+            >
+              {{ selectedJob.company_name.charAt(0) }}
+            </div>
+          }
+
+          <div class="flex-1">
+            <h1 class="text-2xl font-extrabold text-gray-900 sm:text-3xl">
+              {{ selectedJob.title }}
+            </h1>
+
+            <p class="mt-2 font-medium text-gray-500">
+              {{ selectedJob.company_name }}
+            </p>
+
+            <div class="mt-4 flex flex-wrap gap-3 text-sm text-gray-500">
+              <span>Location: {{ selectedJob.candidate_required_location }}</span>
+
+              <span>Type: {{ selectedJob.job_type || 'Not specified' }}</span>
+
+              <span>Salary: {{ selectedJob.salary || 'Not disclosed' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 flex flex-wrap gap-3 border-t justify-between border-gray-100 pt-7">
+          <span class="px-5 py-3.5 text-sm font-semibold text-gray-600"> Source: Remotive </span>
+
+          <a
+            [href]="selectedJob.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="rounded-xl bg-indigo-600 flex gap-1.5 items-center px-5 py-3.5 text-sm font-semibold text-white transition hover:bg-indigo-700"
+          >
+            Apply Now
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="12"
+              fill="currentColor"
+              class="bi bi-arrow-up-right"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M14 2.5a.5.5 0 0 0-.5-.5h-6a.5.5 0 0 0 0 1h4.793L2.146 13.146a.5.5 0 0 0 .708.708L13 3.707V8.5a.5.5 0 0 0 1 0z"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Job Description -->
+      <div class="mt-7 rounded-2xl border border-gray-200 p-7 sm:p-10">
+        <h2 class="text-xl font-bold text-gray-900">Job Description</h2>
+
+        <div
+          class="prose prose-sm mt-7 max-w-none wrap-break-word text-gray-600 prose-headings:text-gray-900 prose-a:text-indigo-600"
+          [innerHTML]="selectedJob.description"
+        ></div>
+
+        @if (selectedJob.tags?.length) {
+          <div class="mt-10 border-t border-gray-100 pt-7">
+            <h3 class="font-bold text-gray-900">Required Skills / Tags</h3>
+
+            <div class="mt-4 flex flex-wrap gap-2">
+              @for (tag of selectedJob.tags; track tag) {
+                <span class="rounded-lg bg-indigo-50 px-4 py-2 text-sm font-medium text-indigo-600">
+                  {{ tag }}
+                </span>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</section>
