@@ -107,6 +107,7 @@ ng serve
 5. Open the application
 
 http://localhost:4200
+'''bash
 
 ##Project Status
 
