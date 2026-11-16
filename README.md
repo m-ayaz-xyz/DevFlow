@@ -108,12 +108,12 @@ ng serve
 
 http://localhost:4200
 
-Project Status
+##Project Status
 
 The initial development of DevFlow is complete, covering the landing page, job discovery, API integration, search, filtering, pagination, and job details.
 
 The application is built with a focus on maintainability, performance, and a responsive user experience.
 
----
 
-Built with Angular and TypeScript, By Ayaz
+
+###Built with Angular and TypeScript, By Ayaz
